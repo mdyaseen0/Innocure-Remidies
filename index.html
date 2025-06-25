@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innocure Remedies - Natural Diabetes Solutions</title>
+    <link rel="icon" href="./Screenshot 2025-06-25 010840.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        :root {
+            --primary-green: #4a8a5c;
+            --light-green: #e8f5e9;
+            --dark-green: #2e6b3e;
+            --accent-brown: #8d6e63;
+            --light-brown: #d7ccc8;
+            --light-beige: #f5f0e6;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--light-beige);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: var(--primary-green);
+        }
+
+        .logo span {
+            color: var(--accent-brown);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-green);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons i {
+            font-size: 20px;
+            margin-left: 20px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons i:hover {
+            color: var(--primary-green);
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary-green);
+            color: var(--white);
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background:  url(./background.jpg);
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-brown);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-green);
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-green);
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 15px auto 0;
+            color: var(--text-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            background-color: var(--light-green);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        /* Products Section */
+        .products {
+            background-color: var(--light-beige);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 2;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .product-rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .product-rating span {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .add-to-cart i {
+            margin-right: 8px;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--dark-green);
+        }
+
+        .view-details {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .view-details i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .view-details:hover {
+            color: var(--dark-green);
+        }
+
+        .view-details:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background-color: var(--white);
+        }
+
+        .benefits-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .benefits-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .benefits-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .benefits-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .benefits-text {
+            flex: 1;
+        }
+
+        .benefits-text h2 {
+            margin-bottom: 30px;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .benefits-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-green);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--light-beige);
+            text-align: center;
+        }
+
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 30px 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-card::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: var(--light-green);
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 2px solid var(--light-green);
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .testimonial-rating {
+            color: #ffc107;
+            margin-top: 10px;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background-color: var(--accent-brown);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--light-brown);
+        }
+
+        /* Blog Section */
+        .blog {
+            background-color: var(--white);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: var(--light-beige);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .blog-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .blog-card:hover .blog-img img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-date {
+            color: var(--accent-brown);
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .blog-excerpt {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--dark-green);
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--light-beige);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .contact-details {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-details i {
+            color: var(--primary-green);
+            font-size: 20px;
+            margin-right: 15px;
+            min-width: 20px;
+        }
+
+        .contact-form {
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 2px rgba(74, 138, 92, 0.2);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        #map {
+            height: 300px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 60px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 22px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-brown);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-contact li {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent-brown);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-brown);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #bdbdbd;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Background for home-page section
+        #home-page {
+            background: url('background.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            z-index: 0;
+        } */
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .benefits-content {
+                flex-direction: column;
+            }
+            
+            .benefits-img, .benefits-text {
+                flex: none;
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 10px 20px;
+            }
+            
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-form button {
+                border-radius: 30px;
+                padding: 15px;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                height: 60vh;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .add-to-cart, .view-details {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="./Screenshot 2025-06-25 010840.png" alt="Innocure Remedies Logo">
+                <h1>Innocure <span>Remedies</span></h1>
+            </div>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <!-- <li><a href="#" data-page="shop">Shop</a></li> -->
+                    <li><a href="#" data-page="products">Products</a></li>
+                    <li><a href="#" data-page="about">About Us</a></li>
+                    <li><a href="#" data-page="blog">Blog</a></li>
+                    <li><a href="#" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+            <!-- <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user" id="login-btn"></i>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart" id="cart-btn"></i>
+                    <span class="cart-count">3</span>
+                </div> -->
+                <div class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section class="page-section active" id="home-page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container hero-content">
+                    <h1>Nature Meets Science </h1>
+                    <p>At Innocure Remedies, we blend the wisdom of traditional herbal medicine with cutting-edge scientific research to create safe, effective, and natural solutions for modern health challenges. From managing chronic wounds to supporting metabolic wellness, our products are crafted to nurture your body from within—without harsh side effects. Trust in nature, empowered by science
+</p>
+                    
+                    <div class="hero-btns">
+                        <a href="#" class="btn" data-page="shop">Shop Now</a>
+                        <a href="#" class="btn btn-outline" data-page="about">Learn More</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Why Choose Our Remedies</h2>
+                        <p>Natural solutions backed by science for effectiveness</p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h3>100% Natural Ingredients</h3>
+                            <p>Harnessing the power of nature with herbs like Moringa, Achyranthus, and Phyllanthus.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h3>Scientifically Validated</h3>
+                            <p>Our formulations are backed by research and in-vitro testing for effectiveness.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h3>Holistic Wellness</h3>
+                            <p>Addressing not just symptoms but promoting overall health and vitality.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <h3>Sustainable & Ethical</h3>
+                            <p>Responsibly sourced ingredients and eco-friendly packaging.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section class="products">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Our Natural Solutions</h2>
+                        <p>Specially formulated for diabetes management and wound healing</p>
+                    </div>
+                    <div class="products-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="./plast.jpg" alt="Herbalplast Patch">
+                                <span class="product-badge">Bestseller</span>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Herbalplast Wound Healing Patch</h3>
+                                <!-- <div class="product-price">₹1,299</div> -->
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>(42 reviews)</span>
+                                </div>
+                                <p>Advanced polyherbal nanofiber patch for diabetic wound care</p>
+                                <div class="product-actions">
+                                    <!-- <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button> -->
+                                    <!-- <a href="#" class="view-details">Details <i class="fas fa-arrow-right"></i></a> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="./spray.png" alt="Herbalplast Spray">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Herbalplast Wound Healing Spray</h3>
+                                <!-- <div class="product-price">₹899</div> -->
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>(28 reviews)</span>
+                                </div>
+                                <p>Hygienic spray for quick wound management and healing</p>
+                                <div class="product-actions">
+                                    <!-- <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button> -->
+                                    <!-- <a href="#" class="view-details">Details <i class="fas fa-arrow-right"></i></a> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="./gel.jpg" alt="Herbalplast Gel">
+                                <span class="product-badge">New</span>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Herbalplast Healing Gel</h3>
+                                <!-- <div class="product-price">₹1,199</div> -->
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>(15 reviews)</span>
+                                </div>
+                                <p>Fast-absorbing gel for deep healing and soothing relief</p>
+                                <div class="product-actions">
+                                    <!-- <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button> -->
+                                    <!-- <a href="#" class="view-details">Details <i class="fas fa-arrow-right"></i></a> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <!-- <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1579684947550-22e945225d9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Sugar Balance Capsules">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Sugar Balance Capsules</h3>
+                                <div class="product-price">₹1,499</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>(36 reviews)</span>
+                                </div>
+                                <p>Natural formula to support healthy glucose metabolism</p>
+                                <div class="product-actions">
+                                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                                    <a href="#" class="view-details">Details <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="benefits">
+                <div class="container">
+                    <div class="benefits-content">
+                        <div class="benefits-img">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Natural Ingredients">
+                        </div>
+                        <div class="benefits-text">
+                            <h2>Our Healing Ingredients</h2>
+                            <p>At Innocure Remedies, we combine traditional wisdom with modern science to create effective natural solutions for diabetes management.</p>
+                            <ul class="benefits-list">
+                                <li><strong>Moringa Oleifera:</strong> Known for its antidiabetic properties and ability to promote high tissue regeneration.</li>
+                                <li><strong>Achyranthus Aspera:</strong> Powerful anti-inflammatory and antioxidant effects to combat oxidative stress.</li>
+                                <li><strong>Phyllanthus Niruri:</strong> Natural antimicrobial activity to prevent infections in diabetic wounds.</li>
+                                <li><strong>Nanotechnology:</strong> Enhanced bioavailability and targeted delivery for maximum effectiveness.</li>
+                                <li><strong>Holistic Approach:</strong> Addressing root causes while promoting overall wellness.</li>
+                            </ul>
+                            <a href="#" class="btn" data-page="about">Our Scientific Approach</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <!-- <section class="testimonials">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Customer Success Stories</h2>
+                        <p>Real people experiencing real results</p>
+                    </div>
+                    <div class="testimonials-container">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"As a diabetic for over 10 years, wound healing was always a struggle. Herbalplast Patch has been a game-changer. My diabetic foot ulcer started healing within days of using it."</p>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Rajesh Kumar</h4>
+                                    <p>Type 2 Diabetic since 2012</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"The Sugar Balance Capsules have helped me maintain steady glucose levels without the side effects I experienced with conventional medications. My doctor is impressed with my latest A1C results!"</p>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Priya Sharma</h4>
+                                    <p>Using products for 6 months</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- Newsletter Section -->
+            <section class="newsletter">
+                <div class="container">
+                    <h2>Join Our Wellness Community</h2>
+                    <p>Subscribe to receive natural health tips, special offers, and updates on new products.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </section>
+        </section>
+
+        <!-- Shop Page -->
+        <!-- <section class="page-section" id="shop-page">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Shop Natural Remedies</h2>
+                    <p>Discover our range of natural solutions for diabetes management</p>
+                </div>
+                
+                <div class="shop-content">
+                    <div class="shop-filters">
+                        <h3>Filter Products</h3>
+                        <div class="filter-category">
+                            <h4>Category</h4>
+                            <ul>
+                                <li><a href="#">All Products</a></li>
+                                <li><a href="#">Wound Care</a></li>
+                                <li><a href="#">Blood Sugar Control</a></li>
+                                <li><a href="#">Diabetic Foot Care</a></li>
+                                <li><a href="#">Wellness Supplements</a></li>
+                            </ul>
+                        </div>
+                        <div class="filter-price">
+                            <h4>Price Range</h4>
+                            <input type="range" min="0" max="5000" value="2500">
+                            <div class="price-values">
+                                <span>₹0</span>
+                                <span>₹5000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="products-grid">
+                      
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- About Us Page -->
+        <section class="page-section" id="about-page">
+            <div class="container">
+                <div class="section-title">
+                    <h2>About Innocure Remedies</h2>
+                    <p>Where nature meets science for effective  care</p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-mission">
+                        <h3>Our Mission</h3>
+                        <!-- <p>Innocure Remedies is a healthcare startup focused on revolutionizing chronic wound care through innovative, nature-powered solutions. Our flagship product, HerbalPlast, is a polyherbal nanofiber patch, spray, and gel developed to treat diabetic foot ulcers and non-healing wounds more effectively.</p>
+                        <p>By combining time-tested Ayurvedic extracts with modern pharmaceutical technologies like nanotechnology and electrospinning, we offer safe, affordable, and eco-friendly alternatives to conventional wound treatments.</p>
+                    -->
+                        <p>Innocure Remedies is a healthcare startup focused on revolutionizing chronic wound care through innovative, nature-powered solutions. Our flagship product, HerbalPlast, is a polyherbal nanofiber patch, spray, and gel developed to treat diabetic foot ulcers and non-healing wounds more effectively. By combining time-tested Ayurvedic extracts with modern pharmaceutical technologies like nanotechnology and electrospinning, we offer safe, affordable, and eco-friendly alternatives to conventional wound treatments. Our scalable product line addresses a critical gap in diabetic wound care, with prototypes validated through clinical collaborations and recognized at national innovation platforms.</p>
+                    </div> 
+                    <br>
+                    <br>
+
+                    <div class="team-section">
+                        <h3>Our Founders</h3>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <!-- <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Bathula Mahalakshmi"> -->
+                                <h4><b>Bathula Mahalakshmi, Arige Sirisha</b> </h4>
+                                <p>Founder's</p>
+                            </div>
+                            <!-- <div class="team-member">
+                                 <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Arige Sirisha"> 
+                                <h4>Arige Sirisha</h4>
+                                <p>Founder</p>
+                            </div> -->
+                            <!-- <div class="team-member">
+                                <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Dr. Sagi Anil Kumar">
+                                <h4>Dr. Sagi Anil Kumar</h4>
+                                <p>Co-Founder</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    
+                    <div class="scientific-approach">
+                        <h3>Scientific Approach</h3>
+                        <p>Our scalable product line addresses a critical gap in diabetic wound care, with prototypes validated through clinical collaborations and recognized at national innovation platforms.</p>
+                        <ul class="benefits-list">
+                            <li>Advanced nanotechnology for enhanced delivery</li>
+                            <li>Rigorous in-vitro testing and evaluation</li>
+                            <li>Collaboration with medical professionals</li>
+                            <li>Continuous research and development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Page -->
+        <section class="page-section" id="blog-page">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Natural Health Blog</h2>
+                    <p>Tips and insights for managing diabetes naturally</p>
+                </div>
+                
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1535914254981-b5012eebbd15?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Natural Diabetes Management">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-date">June 12, 2025</span>
+                            <h3 class="blog-title">5 Natural Ways to Manage Blood Sugar Levels</h3>
+                            <p class="blog-excerpt">Discover how incorporating certain herbs and lifestyle changes can help maintain healthy glucose levels naturally.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Diabetic Foot Care">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-date">May 28, 2025</span>
+                            <h3 class="blog-title">Essential Foot Care Tips for Diabetics</h3>
+                            <p class="blog-excerpt">Learn why foot care is critical for diabetics and how to prevent complications with natural remedies and proper care.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <div class="blog-img">
+                            <img src="https://images.unsplash.com/photo-1547592187e0b4f4b912a7e2d039e3c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Herbal Remedies">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-date">May 15, 2025</span>
+                            <h3 class="blog-title">The Power of Ayurveda in Diabetes Management</h3>
+                            <p class="blog-excerpt">Explore how ancient Ayurvedic principles combined with modern science create effective solutions for diabetes care.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section class="page-section" id="contact-page">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Contact Us</h2>
+                    <p>We'd love to hear from you</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Get In Touch</h3>
+                        <ul class="contact-details">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>353/3, FL-412, Garagaparru Road, Gollalakoderu, Bhimavaram Bazar, Bhimavaram 1 Town Police Station, Bhimavaram,
+West Godavari- 534202, AndhraPradesh,India</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+91 9966122344</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>care@innocureremedies.com</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span>Monday - Saturday: 9AM - 6PM</span>
+                            </li>
+                        </ul>
+                        
+                        <h3>Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send a Message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="map"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNNyAyMkgxN0E1IDUgMCAwIDAgMjIgMTdWN0E1IDUgMCAwIDAgMTcgMkg3QTUgNSAwIDAgMCAyIDd2MTBhNSA1IDAgMCAwIDUgNXoiLz48cGF0aCBkPSJNMTIgMTd2LTUiLz48cGF0aCBkPSJNMTIgOGwuMDEgMCIvPjwvc3ZnPg==" alt="Innocure Remedies Logo">
+                        <h3>Innocure Remedies</h3>
+                    </div>
+                    <p>Where nature meets science to provide effective, natural solutions for diabetes management and holistic wellness.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="shop">Shop</a></li>
+                        <li><a href="#" data-page="products">Products</a></li>
+                        <li><a href="#" data-page="about">About Us</a></li>
+                        <li><a href="#" data-page="blog">Blog</a></li>
+                        <li><a href="#" data-page="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Products</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Herbalplast Patch</a></li>
+                        <li><a href="#">Herbalplast Spray</a></li>
+                        <li><a href="#">Herbalplast Gel</a></li>
+                        <li><a href="#">Sugar Balance Capsules</a></li>
+                        <li><a href="#">Diabetic Foot Care Kit</a></li>
+                        <li><a href="#">Blood Sugar Support Tea</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>353/3, FL-412, Garagaparru Road, Gollalakoderu, Bhimavaram Bazar, Bhimavaram 1 Town Police Station, Bhimavaram,
+West Godavari- 534202, AndhraPradesh,India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 9966122344</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>care@innocureremedies.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Sat: 9AM - 6PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p>&copy; 2023 Innocure Remedies. All Rights Reserved. | Nature Tech Innovation</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <!-- <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p>Don't have an account? <a href="#" id="signup-link">Sign Up</a></p>
+            </form>
+        </div>
+    </div> -->
+
+    <script>
+        // Page Navigation
+        document.querySelectorAll('a[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page') + '-page';
+                
+                // Hide all pages
+                document.querySelectorAll('.page-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Close mobile menu if open
+                navMenu.classList.remove('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Add to cart functionality
+        const addToCartBtns = document.querySelectorAll('.add-to-cart');
+        const cartCount = document.querySelector('.cart-count');
+        let count = 3;
+        
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                count++;
+                cartCount.textContent = count;
+                
+                // Animation effect
+                btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+                }, 2000);
+            });
+        });
+
+        // Initialize map
+        function initMap() {
+            // Coordinates for the map (example: Hyderabad, India)
+            const myLatLng = { lat: 17.3850, lng: 78.4867 };
+            
+            const map = L.map('map').setView(myLatLng, 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            L.marker(myLatLng).addTo(map)
+                .bindPopup('Innocure Remedies Headquarters')
+                .openPopup();
+        }
+
+        // Initialize the map when the page loads
+        window.onload = initMap;
+
+        // Modal functionality
+        const loginBtn = document.getElementById('login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login functionality would connect to the backend in a real application');
+            loginModal.style.display = 'none';
+            this.reset();
+        });
+    </script>
+</body>
+</html>
